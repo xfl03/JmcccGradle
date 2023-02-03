@@ -1,8 +1,14 @@
 plugins {
     java
-    id("com.ncorti.kotlin.gradle.template.plugin")
+    id("dev.3-3.jmccc-gradle")
 }
 
-templateExampleConfig {
-    message.set("Just trying this gradle plugin...")
+jmccc {
+    runs {
+        create("forge") {
+            logger.warn("SET full Version")
+            fullVersion.set("1.19.3-forge-44.1.8")
+        }
+        logger.warn(this.size.toString())
+    }
 }
