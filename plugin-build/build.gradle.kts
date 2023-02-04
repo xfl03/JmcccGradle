@@ -1,11 +1,11 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-    alias(libs.plugins.kotlin) apply false
-    alias(libs.plugins.pluginPublish) apply false
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.ktlint)
-    alias(libs.plugins.versionCheck)
+    id("org.jetbrains.kotlin.jvm") apply false
+    id("com.gradle.plugin-publish") apply false
+    id("io.gitlab.arturbosch.detekt")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("com.github.ben-manes.versions")
 }
 
 allprojects {
@@ -13,8 +13,8 @@ allprojects {
     version = property("VERSION").toString()
 
     apply {
-        plugin(rootProject.libs.plugins.detekt.get().pluginId)
-        plugin(rootProject.libs.plugins.ktlint.get().pluginId)
+        plugin("io.gitlab.arturbosch.detekt")
+        plugin("org.jlleitschuh.gradle.ktlint")
     }
 
     ktlint {

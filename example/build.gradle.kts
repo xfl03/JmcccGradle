@@ -1,14 +1,18 @@
 plugins {
-    java
+    id("org.jetbrains.kotlin.jvm")
     id("dev.3-3.jmccc-gradle")
 }
 
 jmccc {
     runs {
-        create("forge") {
-            logger.warn("SET full Version")
-            fullVersion.set("1.19.3-forge-44.1.8")
+        create("Forge 1.19.3") {
+            version.set("1.19.3-forge-44.1.8")
+            workingDirectory.set(project.file("run"))
+            modFiles.add(tasks["jar"])
         }
-        logger.warn(this.size.toString())
+        create("Fabric 1.19.3") {
+            version.set("fabric-loader-0.14.13-1.19.3")
+            workingDirectory.set(project.file("run"))
+        }
     }
 }
