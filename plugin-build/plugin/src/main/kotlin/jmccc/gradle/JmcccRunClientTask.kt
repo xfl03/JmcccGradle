@@ -6,6 +6,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.to2mbn.jmccc.auth.OfflineAuthenticator
@@ -23,6 +24,11 @@ abstract class JmcccRunClientTask : DefaultTask() {
     @get:Option(option = "runConfig", description = "JMCCC client run config")
     abstract val runConfig: Property<RunConfig>
 
+    @get:Input
+    @get:Option(option = "launchGame", description = "Need launch the game")
+    @get:Optional
+    abstract val launchGame: Property<Boolean>
+
     @TaskAction
     fun runAction() {
         // Check config
@@ -33,6 +39,7 @@ abstract class JmcccRunClientTask : DefaultTask() {
         if (!config.version.isPresent) {
             throw GradleException("run version not set")
         }
+        val needLaunchGame = launchGame.orNull ?: true
         var version = config.version.get()
 
         // Copy mods
@@ -49,6 +56,8 @@ abstract class JmcccRunClientTask : DefaultTask() {
             version = download(mcDir, version).version
         }
         // Launch game
-        launch(LaunchOption(version, OfflineAuthenticator.name("player"), mcDir))
+        if (needLaunchGame) {
+            launch(LaunchOption(version, OfflineAuthenticator.name("player"), mcDir))
+        }
     }
 }

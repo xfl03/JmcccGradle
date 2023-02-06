@@ -13,7 +13,7 @@ class RunConfig(private val project: Project, private val name: String) {
         project.objects.property(File::class.java).convention(project.file(".minecraft"))
     val modFiles: ListProperty<Any> = project.objects.listProperty(Any::class.java)
 
-    fun getTaskName() = "run${name.replace(Regex("[^a-zA-Z0-9\\-_]"), "")}"
+    fun getTaskName() = name.replace(Regex("[^a-zA-Z0-9\\-_]"), "")
 
     fun getModJarFiles() =
         if (modFiles.isPresent) modFiles.get().map { getModJarFile(project, it) } else emptyList<File>()
