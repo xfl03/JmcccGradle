@@ -16,11 +16,14 @@ abstract class JmcccPlugin : Plugin<Project> {
         project.gradle.projectsEvaluated {
             extension.internalRuns.forEach { runConfig ->
                 println(runConfig.getTaskName())
-                val prepare = project.tasks.register("prepareRun" + runConfig.getTaskName(), JmcccPrepareRunClientTask::class.java) {
+                val prepare = project.tasks.register(
+                    "prepareRun" + runConfig.getTaskName(),
+                    JmcccPrepareRunClientTask::class.java
+                ) {
                     runConfig.addTaskDependencies(it)
                     it.runConfig.set(runConfig)
                 }
-                project.tasks.register("run" + runConfig.getTaskName(),  JmcccRunClientTask::class.java) {
+                project.tasks.register("run" + runConfig.getTaskName(), JmcccRunClientTask::class.java) {
                     it.dependsOn.add(prepare.get())
                     it.runConfig.set(runConfig)
                 }
