@@ -34,7 +34,7 @@ pluginBundle {
     website = property("WEBSITE").toString()
     vcsUrl = property("VCS_URL").toString()
     description = property("DESCRIPTION").toString()
-    tags = listOf("plugin", "gradle", "minecraft", "kotlin")
+    tags = listOf("minecraft", "kotlin", "client", "downloader", "launcher")
 }
 
 tasks.create("setupPluginUploadFromEnvironment") {
