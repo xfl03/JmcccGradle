@@ -1,4 +1,4 @@
-package jmccc.gradle
+package jmccc.gradle.extension
 
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer

@@ -1,33 +1,25 @@
-package jmccc.gradle
+package jmccc.gradle.task
 
+import jmccc.gradle.extension.RunConfig
 import jmccc.gradle.core.download
-import jmccc.gradle.core.launch
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.to2mbn.jmccc.auth.OfflineAuthenticator
-import org.to2mbn.jmccc.option.LaunchOption
 import org.to2mbn.jmccc.option.MinecraftDirectory
 
-abstract class JmcccRunClientTask : DefaultTask() {
+abstract class JmcccPrepareRunClientTask : DefaultTask() {
 
     init {
-        description = "JMCCC run client task"
-        group = "dev.3-3"
+        description = "JMCCC prepare run client task"
+        group = "JMCCC"
     }
 
     @get:Input
     @get:Option(option = "runConfig", description = "JMCCC client run config")
     abstract val runConfig: Property<RunConfig>
-
-    @get:Input
-    @get:Option(option = "launchGame", description = "Need launch the game")
-    @get:Optional
-    abstract val launchGame: Property<Boolean>
 
     @TaskAction
     fun runAction() {
@@ -39,8 +31,7 @@ abstract class JmcccRunClientTask : DefaultTask() {
         if (!config.version.isPresent) {
             throw GradleException("run version not set")
         }
-        val needLaunchGame = launchGame.orNull ?: true
-        var version = config.version.get()
+        val version = config.version.get().getVersionString()
 
         // Copy mods
         val mcDir = MinecraftDirectory(config.workingDirectory.get())
@@ -53,11 +44,7 @@ abstract class JmcccRunClientTask : DefaultTask() {
 
         // Download game
         if (!mcDir.getVersionJson(version).exists()) {
-            version = download(mcDir, version).version
-        }
-        // Launch game
-        if (needLaunchGame) {
-            launch(LaunchOption(version, OfflineAuthenticator.name("player"), mcDir))
+            download(mcDir, version).version
         }
     }
 }

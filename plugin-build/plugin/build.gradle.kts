@@ -7,8 +7,8 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(gradleApi())
-    implementation("dev.3-3:jmccc:3.1.1")
-    implementation("dev.3-3:jmccc-mcdownloader:3.1.1")
+    implementation("dev.3-3:jmccc:3.1.4")
+    implementation("dev.3-3:jmccc-mcdownloader:3.1.4")
 
     testImplementation(libs.junit)
 }
