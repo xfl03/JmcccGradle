@@ -1,7 +1,7 @@
 package jmccc.gradle.task
 
-import jmccc.gradle.extension.RunConfig
 import jmccc.gradle.core.download
+import jmccc.gradle.extension.RunConfig
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.provider.Property

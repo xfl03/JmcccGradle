@@ -23,7 +23,6 @@ fun launch(option: LaunchOption) {
 
 fun LaunchOption.generateLaunchArgs(): LaunchArgument = launcher.generateLaunchArgs(this)
 
-
 class JmcccProcessListener : ProcessListener {
     override fun onLog(log: String?) {
         println(log)
